@@ -130,13 +130,16 @@ enum Opcodes {
     LOG2 (0xa2, 0),
     LOG3 (0xa3, 0),
     LOG4 (0xa4, 0),
+
     CREATE (0xf0, 0),
     CALL (0xf1, 0),
     CALLCODE (0xf2, 0),
     RETURN (0xf3, 0),
     DELEGATECALL (0xf4, 0),
+
     STATICCALL (0xfa, 0),
     REVERT (0xfd, 0),
+
     INVALID (0xfe, 0),
     SELFDESTRUCT (0xff, 0);
 

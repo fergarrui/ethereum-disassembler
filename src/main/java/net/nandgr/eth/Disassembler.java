@@ -1,19 +1,33 @@
 package net.nandgr.eth;
 
 import net.nandgr.eth.iterator.StringTwoCharIterator;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class Disassembler {
 
-    private final String code;
+    private static final String CONTRACT_METADATA_PREFIX = "a165627a7a72305820"; // 0xa1 0x65 'b' 'z' 'z' 'r' '0' 0x58 0x20 + <32 bytes swarm hash> <2 bytes length of the metadata>
+    private String code;
+    private String contractMetadata;
     private String disassembledCode = "";
     private final List<Opcode> opcodes = new ArrayList<>();
 
     public Disassembler(String code) {
         this.code = code;
+        trimMetadata();
         loadOpcodes();
+    }
+
+    private void trimMetadata() {
+        if (code.contains(CONTRACT_METADATA_PREFIX)) {
+            String[] splittedCode = code.split(CONTRACT_METADATA_PREFIX);
+            if (splittedCode.length > 1) {
+                this.code = splittedCode[0];
+                this.contractMetadata = CONTRACT_METADATA_PREFIX + splittedCode[1];
+            } else {
+                // probably malformed bytecode. Throw exception / log error
+            }
+        }
     }
 
     private void loadOpcodes() {
@@ -42,6 +56,10 @@ public class Disassembler {
 
     public String getCode() {
         return code;
+    }
+
+    public String getContractMetadata() {
+        return contractMetadata;
     }
 
     public String getDisassembledCode() {
