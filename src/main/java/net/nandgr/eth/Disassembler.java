@@ -49,7 +49,7 @@ public class Disassembler {
                 }
             }
             opcodes.add(opcode);
-            disassembledCodeBuilder.append(opcode.toString()).append("\n");
+            disassembledCodeBuilder.append(opcode.toString()).append(System.lineSeparator());
         }
         this.disassembledCode = disassembledCodeBuilder.toString();
     }
