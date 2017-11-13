@@ -1,4 +1,4 @@
-package net.nandgr.eth;
+package net.nandgr.eth.iterator;
 
 import java.util.Iterator;
 
@@ -7,7 +7,7 @@ public class StringTwoCharIterator implements Iterator<String> {
     private final String str;
     private int pos = 0;
 
-    StringTwoCharIterator(String str) {
+    public StringTwoCharIterator(String str) {
         this.str = str;
     }
 

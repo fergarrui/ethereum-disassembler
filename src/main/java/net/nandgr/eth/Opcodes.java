@@ -143,11 +143,11 @@ enum Opcodes {
     private int opcode;
     private int parametersNum;
 
-    private static Map<Integer, OpcodeDefinition> opcodes = new HashMap<>();
+    private static Map<Integer, Opcodes> opcodes = new HashMap<>();
 
     static {
-        Arrays.stream(Opcodes.values()).forEach(value -> {
-            opcodes.put(value.opcode, new OpcodeDefinition(value.toString(), value.parametersNum));
+        Arrays.stream(Opcodes.values()).forEach(opcode -> {
+            opcodes.put(opcode.getOpcode(), opcode);
         });
     }
 
@@ -156,7 +156,7 @@ enum Opcodes {
         this.parametersNum = paramsNum;
     }
 
-    static OpcodeDefinition getOpcode(Integer hex) {
+    static Opcodes getOpcode(Integer hex) {
         return opcodes.get(hex);
     }
 
@@ -166,23 +166,5 @@ enum Opcodes {
 
     public int getParametersNum() {
         return parametersNum;
-    }
-
-    static class OpcodeDefinition {
-        private final String name;
-        private final Integer parametersNum;
-
-        OpcodeDefinition(String name, Integer parametersNum) {
-            this.name = name;
-            this.parametersNum = parametersNum;
-        }
-
-        String getName() {
-            return name;
-        }
-
-        Integer getParametersNum() {
-            return parametersNum;
-        }
     }
 }

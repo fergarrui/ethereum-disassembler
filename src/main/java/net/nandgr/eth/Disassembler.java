@@ -1,15 +1,17 @@
 package net.nandgr.eth;
 
+import net.nandgr.eth.iterator.StringTwoCharIterator;
+
 import java.util.ArrayList;
 import java.util.List;
 
-class Disassembler {
+public class Disassembler {
 
     private final String code;
     private String disassembledCode = "";
     private final List<Opcode> opcodes = new ArrayList<>();
 
-    Disassembler(String code) {
+    public Disassembler(String code) {
         this.code = code;
         loadOpcodes();
     }
@@ -21,11 +23,11 @@ class Disassembler {
             String nextByte = iterator.next();
             Opcode opcode = new Opcode();
             Integer opcodeHex = Integer.valueOf(nextByte, 16);
-            Opcodes.OpcodeDefinition opcodeDefinition = Opcodes.getOpcode(opcodeHex);
+            Opcodes opcodeDefinition = Opcodes.getOpcode(opcodeHex);
             if (opcodeDefinition == null) {
                 opcode.setOpcode("Unknown Opcode: " + nextByte);
             } else {
-                opcode.setOpcode(opcodeDefinition.getName());
+                opcode.setOpcode(opcodeDefinition.toString());
                 Integer parametersNum = opcodeDefinition.getParametersNum();
                 if (parametersNum > 0) {
                     String opParameter = getParameter(parametersNum, iterator);
