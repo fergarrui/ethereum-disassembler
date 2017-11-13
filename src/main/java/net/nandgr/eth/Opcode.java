@@ -27,15 +27,6 @@ public class Opcode {
         if (parameter != null) {
             toString += " " + parameter;
         }
-//        try {
-//            Opcodes opcodes = Opcodes.valueOf(this.opcode);
-//            if (opcodes != null) {
-//                toString += " (" + Integer.toHexString(opcodes.getOpcode()) + ")";
-//            }
-//
-//        } catch (Exception e) {
-//
-//        }
         return toString;
     }
 }
