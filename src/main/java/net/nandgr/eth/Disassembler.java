@@ -1,6 +1,6 @@
 package net.nandgr.eth;
 
-import net.nandgr.eth.iterator.StringTwoCharIterator;
+import net.nandgr.eth.iterators.StringTwoCharIterator;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,11 +14,14 @@ public class Disassembler {
 
     public Disassembler(String code) {
         this.code = code;
-        trimMetadata();
+        cleanData();
         loadOpcodes();
     }
 
-    private void trimMetadata() {
+    private void cleanData() {
+        if (code.startsWith("0x")) {
+            code = code.substring(2);
+        }
         if (code.contains(CONTRACT_METADATA_PREFIX)) {
             String[] splittedCode = code.split(CONTRACT_METADATA_PREFIX);
             if (splittedCode.length > 1) {
@@ -26,16 +29,21 @@ public class Disassembler {
                 this.contractMetadata = CONTRACT_METADATA_PREFIX + splittedCode[1];
             } else {
                 // probably malformed bytecode. Throw exception / log error
+                throw new IllegalArgumentException("Malformed bytecode");
             }
+        } else {
+
         }
     }
 
     private void loadOpcodes() {
         StringTwoCharIterator iterator = new StringTwoCharIterator(code);
         StringBuilder disassembledCodeBuilder = new StringBuilder();
+        int offset = 0;
         while(iterator.hasNext()) {
             String nextByte = iterator.next();
             Opcode opcode = new Opcode();
+            opcode.setOffset(offset);
             Integer opcodeHex = Integer.valueOf(nextByte, 16);
             Opcodes opcodeDefinition = Opcodes.getOpcode(opcodeHex);
             if (opcodeDefinition == null) {
@@ -44,10 +52,12 @@ public class Disassembler {
                 opcode.setOpcode(opcodeDefinition.toString());
                 Integer parametersNum = opcodeDefinition.getParametersNum();
                 if (parametersNum > 0) {
+                    offset += parametersNum;
                     String opParameter = getParameter(parametersNum, iterator);
                     opcode.setParameter(opParameter);
                 }
             }
+            offset++;
             opcodes.add(opcode);
             disassembledCodeBuilder.append(opcode.toString()).append(System.lineSeparator());
         }

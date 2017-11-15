@@ -1,4 +1,4 @@
-package net.nandgr.eth.iterator;
+package net.nandgr.eth.iterators;
 
 import java.util.Iterator;
 
