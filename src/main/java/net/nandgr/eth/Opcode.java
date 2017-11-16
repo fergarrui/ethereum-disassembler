@@ -1,24 +1,26 @@
 package net.nandgr.eth;
 
+import java.math.BigInteger;
+
 public class Opcode {
 
     private int offset;
-    private String opcode;
-    private String parameter;
+    private Opcodes opcode;
+    private BigInteger parameter;
 
-    public String getOpcode() {
+    public Opcodes getOpcode() {
         return opcode;
     }
 
-    void setOpcode(String opcode) {
+    void setOpcode(Opcodes opcode) {
         this.opcode = opcode;
     }
 
-    public String getParameter() {
+    public BigInteger getParameter() {
         return parameter;
     }
 
-    void setParameter(String parameter) {
+    void setParameter(BigInteger parameter) {
         this.parameter = parameter;
     }
 
@@ -32,9 +34,9 @@ public class Opcode {
 
     @Override
     public String toString() {
-        String toString = "0x" + String.format("%03X", this.offset) + " " + this.opcode;
+        String toString = "0x" + String.format("%03X", this.offset) + " " + this.opcode.name();
         if (parameter != null) {
-            toString += " " + parameter;
+            toString += " 0x" + parameter.toString(16);
         }
         return toString;
     }

@@ -4,7 +4,9 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-enum Opcodes {
+public enum Opcodes {
+
+    UNKNOWN(-1, 0),
 
     STOP (0x00, 0),
     ADD (0x01, 0),

@@ -1,6 +1,8 @@
 package net.nandgr.eth;
 
 import net.nandgr.eth.iterators.StringTwoCharIterator;
+
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,14 +49,14 @@ public class Disassembler {
             Integer opcodeHex = Integer.valueOf(nextByte, 16);
             Opcodes opcodeDefinition = Opcodes.getOpcode(opcodeHex);
             if (opcodeDefinition == null) {
-                opcode.setOpcode("Unknown Opcode: " + nextByte);
+                opcode.setOpcode(Opcodes.UNKNOWN);
             } else {
-                opcode.setOpcode(opcodeDefinition.toString());
+                opcode.setOpcode(opcodeDefinition);
                 Integer parametersNum = opcodeDefinition.getParametersNum();
                 if (parametersNum > 0) {
                     offset += parametersNum;
                     String opParameter = getParameter(parametersNum, iterator);
-                    opcode.setParameter(opParameter);
+                    opcode.setParameter(new BigInteger(opParameter.replaceAll("0x", ""),16));
                 }
             }
             offset++;
