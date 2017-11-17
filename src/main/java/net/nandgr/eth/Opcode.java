@@ -8,6 +8,13 @@ public class Opcode {
     private Opcodes opcode;
     private BigInteger parameter;
 
+    public Opcode() {}
+
+    public Opcode(Opcodes opcode, BigInteger parameter) {
+        this.opcode = opcode;
+        this.parameter = parameter;
+    }
+
     public Opcodes getOpcode() {
         return opcode;
     }
