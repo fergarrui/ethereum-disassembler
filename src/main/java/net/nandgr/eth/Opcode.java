@@ -10,6 +10,12 @@ public class Opcode {
 
     public Opcode() {}
 
+    public Opcode(int offset, Opcodes opcode, BigInteger parameter) {
+        this.offset = offset;
+        this.opcode = opcode;
+        this.parameter = parameter;
+    }
+
     public Opcode(Opcodes opcode, BigInteger parameter) {
         this.opcode = opcode;
         this.parameter = parameter;
