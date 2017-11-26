@@ -172,4 +172,9 @@ public enum Opcodes {
     public int getParametersNum() {
         return parametersNum;
     }
+
+    public static boolean isPush(Opcodes opcode) {
+        int opcodeInt = opcode.getOpcode();
+        return  opcodeInt >= Opcodes.PUSH1.getOpcode() && opcodeInt <= Opcodes.PUSH32.getOpcode();
+    }
 }
