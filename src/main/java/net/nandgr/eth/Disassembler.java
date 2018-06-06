@@ -15,27 +15,22 @@ public class Disassembler {
     private final List<Opcode> opcodes = new ArrayList<>();
 
     public Disassembler(String code) {
-        this.code = code;
-        cleanData();
+        String[] codeStripped = cleanData(code);
+        this.code = codeStripped[0];
+        this.contractMetadata = CONTRACT_METADATA_PREFIX + codeStripped[1];
         loadOpcodes();
     }
 
-    private void cleanData() {
+    public static String[] cleanData(String code) {
         if (code.startsWith("0x")) {
             code = code.substring(2);
         }
-        if (code.contains(CONTRACT_METADATA_PREFIX)) {
-            String[] splittedCode = code.split(CONTRACT_METADATA_PREFIX);
-            if (splittedCode.length > 1) {
-                this.code = splittedCode[0];
-                this.contractMetadata = CONTRACT_METADATA_PREFIX + splittedCode[1];
-            } else {
-                // probably malformed bytecode. Throw exception / log error
-                throw new IllegalArgumentException("Malformed bytecode");
-            }
-        } else {
-
+        String[] splittedCode = code.split(CONTRACT_METADATA_PREFIX);
+        if (splittedCode.length <= 1) {
+            // probably malformed bytecode. Throw exception / log error
+            throw new IllegalArgumentException("Malformed bytecode");
         }
+        return splittedCode;
     }
 
     private void loadOpcodes() {
