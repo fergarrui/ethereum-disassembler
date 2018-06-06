@@ -32,5 +32,3 @@ Outputs:
 0x01B PUSH1 0x60
 0x01D PUSH1 0x
 ```
-
-### Executable jar coming soon
