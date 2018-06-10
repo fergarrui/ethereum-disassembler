@@ -45,6 +45,8 @@ public enum Opcodes {
     GASPRICE (0x3a, 0),
     EXTCODESIZE (0x3b, 0),
     EXTCODECOPY (0x3c, 0),
+    RETURNDATASIZE (0x3d, 0),
+    RETURNDATACOPY (0x3e, 0),
     BLOCKHASH (0x40, 0),
     COINBASE (0x41, 0),
     TIMESTAMP (0x42, 0),

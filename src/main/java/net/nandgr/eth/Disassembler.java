@@ -17,7 +17,9 @@ public class Disassembler {
     public Disassembler(String code) {
         String[] codeStripped = cleanData(code);
         this.code = codeStripped[0];
-        this.contractMetadata = CONTRACT_METADATA_PREFIX + codeStripped[1];
+        if (codeStripped.length > 1) {
+            this.contractMetadata = CONTRACT_METADATA_PREFIX + codeStripped[1];
+        }
         loadOpcodes();
     }
 
@@ -25,12 +27,7 @@ public class Disassembler {
         if (code.startsWith("0x")) {
             code = code.substring(2);
         }
-        String[] splittedCode = code.split(CONTRACT_METADATA_PREFIX);
-        if (splittedCode.length <= 1) {
-            // probably malformed bytecode. Throw exception / log error
-            throw new IllegalArgumentException("Malformed bytecode");
-        }
-        return splittedCode;
+        return code.split(CONTRACT_METADATA_PREFIX);
     }
 
     private void loadOpcodes() {
@@ -44,6 +41,7 @@ public class Disassembler {
             Integer opcodeHex = Integer.valueOf(nextByte, 16);
             Opcodes opcodeDefinition = Opcodes.getOpcode(opcodeHex);
             if (opcodeDefinition == null) {
+                System.out.println("Unknown opcode: " + opcodeHex);
                 opcode.setOpcode(Opcodes.UNKNOWN);
             } else {
                 opcode.setOpcode(opcodeDefinition);
