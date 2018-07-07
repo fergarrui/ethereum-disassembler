@@ -49,7 +49,12 @@ public class Disassembler {
                 if (parametersNum > 0) {
                     offset += parametersNum;
                     String opParameter = getParameter(parametersNum, iterator);
-                    opcode.setParameter(new BigInteger(opParameter.replaceAll("0x", ""),16));
+                    String parameterString = opParameter.replaceAll("0x", "");
+                    if ("".equals(parameterString)) {
+                        opcode.setOpcode(Opcodes.UNKNOWN);
+                    } else {
+                        opcode.setParameter(new BigInteger(parameterString,16));
+                    }
                 }
             }
             offset++;
