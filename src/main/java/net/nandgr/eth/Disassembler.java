@@ -41,7 +41,7 @@ public class Disassembler {
             Integer opcodeHex = Integer.valueOf(nextByte, 16);
             Opcodes opcodeDefinition = Opcodes.getOpcode(opcodeHex);
             if (opcodeDefinition == null) {
-                System.out.println("Unknown opcode: " + opcodeHex);
+                //System.out.println("Unknown opcode: " + opcodeHex);
                 opcode.setOpcode(Opcodes.UNKNOWN);
             } else {
                 opcode.setOpcode(opcodeDefinition);
